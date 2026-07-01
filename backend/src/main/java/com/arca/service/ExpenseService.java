@@ -85,7 +85,9 @@ public class ExpenseService {
     @Transactional(readOnly = true)
     public List<ReceiptDto> receipts(Long id, AuthUser me) {
         loadAuthorized(id, me);
-        return receipts.findByExpense_IdOrderByUploadedAtDesc(id).stream().map(ReceiptDto::from).toList();
+        return receipts.findByExpense_IdOrderByUploadedAtDesc(id).stream()
+                .map(r -> ReceiptDto.from(r, storage.signedUrl(r.getStorageKey())))
+                .toList();
     }
 
     @Transactional
@@ -102,7 +104,8 @@ public class ExpenseService {
                 .contentType(contentType)
                 .sizeBytes(stored.sizeBytes())
                 .build();
-        return ReceiptDto.from(receipts.save(r));
+        Receipt saved = receipts.save(r);
+        return ReceiptDto.from(saved, storage.signedUrl(saved.getStorageKey()));
     }
 
     @Transactional

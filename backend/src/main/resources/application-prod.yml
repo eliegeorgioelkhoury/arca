@@ -1,0 +1,26 @@
+# Production profile — Neon Postgres + Supabase Storage.
+# Activate with SPRING_PROFILES_ACTIVE=prod. All values come from the environment;
+# no defaults on the datasource, so a misconfigured deploy fails fast on boot.
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      # Small pool for a 512 MB instance and Neon's connection limits.
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:5}
+  jpa:
+    hibernate:
+      # Liquibase owns the schema; Hibernate only maps to it.
+      ddl-auto: none
+  liquibase:
+    # Run migrations against Neon on boot.
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+app:
+  supabase:
+    url: ${SUPABASE_URL}
+    service-key: ${SUPABASE_SERVICE_ROLE_KEY}
+    bucket: ${SUPABASE_STORAGE_BUCKET:receipts}
+    signed-url-expiry-seconds: ${SUPABASE_SIGNED_URL_EXPIRY:3600}

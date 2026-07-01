@@ -6,9 +6,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+/** Dev/test receipt storage on the local filesystem (no Supabase). */
 @Service
+@Profile("!prod")
 public class LocalReceiptStorageService implements ReceiptStorageService {
 
     private final Path baseDir;
@@ -34,5 +37,11 @@ public class LocalReceiptStorageService implements ReceiptStorageService {
         } catch (IOException e) {
             throw new UncheckedIOException("Failed to store receipt", e);
         }
+    }
+
+    @Override
+    public String signedUrl(String storageKey) {
+        // No signed URLs in dev; receipts live on the local filesystem.
+        return null;
     }
 }
