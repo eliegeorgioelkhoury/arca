@@ -1,0 +1,241 @@
+:root {
+  --credit-teal: #0e9f8e;
+  --credit-teal-strong: #0b7d70;
+  --credit-teal-soft: #d9f3ef;
+  --debit-coral: #ef5f45;
+  --debit-coral-strong: #d84a30;
+  --debit-coral-soft: #fde2dc;
+  --ink: #18272f;
+  --muted: #5f7480;
+  --bg: #f5f8f9;
+  --card: #ffffff;
+  --border: #e2e9ec;
+  --brand: #0e7490;
+  --brand-strong: #0b5b71;
+  --shadow: 0 1px 2px rgba(16, 42, 52, 0.06), 0 6px 20px rgba(16, 42, 52, 0.06);
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+/* Visible keyboard focus, everywhere. */
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--brand);
+  color: #fff;
+  transition: transform 0.08s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover {
+  background: var(--brand-strong);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn.secondary {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--border);
+}
+.btn.secondary:hover {
+  background: #f0f4f5;
+}
+.btn.credit {
+  background: var(--credit-teal);
+}
+.btn.credit:hover {
+  background: var(--credit-teal-strong);
+}
+.btn.danger {
+  background: var(--debit-coral);
+}
+.btn.danger:hover {
+  background: var(--debit-coral-strong);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.field input,
+.field select,
+.field textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font: inherit;
+  background: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+th {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+td.num,
+th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Credit / debit duality — the ledger's visual signature. */
+.debit {
+  color: var(--debit-coral-strong);
+  font-variant-numeric: tabular-nums;
+}
+.credit {
+  color: var(--credit-teal-strong);
+  font-variant-numeric: tabular-nums;
+}
+.chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.chip.debit {
+  background: var(--debit-coral-soft);
+  color: var(--debit-coral-strong);
+}
+.chip.credit {
+  background: var(--credit-teal-soft);
+  color: var(--credit-teal-strong);
+}
+.chip.status-SUBMITTED {
+  background: #fff3d6;
+  color: #9a6b00;
+}
+.chip.status-APPROVED {
+  background: var(--credit-teal-soft);
+  color: var(--credit-teal-strong);
+}
+.chip.status-REJECTED {
+  background: var(--debit-coral-soft);
+  color: var(--debit-coral-strong);
+}
+
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 12px;
+}
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.spread {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.grid {
+  display: grid;
+  gap: 16px;
+}
+h1 {
+  font-size: 22px;
+  margin: 0 0 4px;
+}
+h2 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.error {
+  color: var(--debit-coral-strong);
+  font-weight: 600;
+}
+
+/* Gentle reveal on load. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.reveal {
+  animation: rise 0.4s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
