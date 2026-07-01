@@ -1,4 +1,4 @@
-// Dev points at the local backend. The production API URL is wired at deploy (milestone 6).
+// Generated from the API_BASE_URL env var by scripts/set-env.mjs — do not edit by hand.
 export const environment = {
   apiBaseUrl: 'http://localhost:8080',
 };
