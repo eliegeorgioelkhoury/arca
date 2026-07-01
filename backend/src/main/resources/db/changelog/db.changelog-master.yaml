@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: changes/0001-core-tables.sql
+      relativeToChangelogFile: true
+  - include:
+      file: changes/0002-ledger-constraint.sql
+      relativeToChangelogFile: true
+  - include:
+      file: changes/0003-seed-reference-data.sql
+      relativeToChangelogFile: true
