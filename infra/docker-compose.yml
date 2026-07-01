@@ -1,0 +1,38 @@
+# One-command local stack: Postgres + the ARCA backend.
+#   docker compose -f infra/docker-compose.yml up --build
+# The Angular dev server (frontend) runs separately with `npm start`.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: arca
+      POSTGRES_USER: arca
+      POSTGRES_PASSWORD: arca
+    ports:
+      - "5432:5432"
+    volumes:
+      - arca-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U arca"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/arca
+      DATABASE_USERNAME: arca
+      DATABASE_PASSWORD: arca
+      JWT_SECRET: local-dev-secret-change-me-0123456789-0123456789
+      CORS_ALLOWED_ORIGINS: http://localhost:4200
+    ports:
+      - "8080:8080"
+
+volumes:
+  arca-pgdata:
