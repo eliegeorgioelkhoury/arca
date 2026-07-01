@@ -14,7 +14,8 @@ FROM eclipse-temurin:17-jre AS runtime
 WORKDIR /app
 COPY --from=build /app/target/arca-backend-*.jar app.jar
 EXPOSE 8080
-# 512 MB budget: cap heap at 70% of the container and lazily initialise beans.
-ENV JAVA_OPTS="-XX:MaxRAMPercentage=70 -XX:+UseSerialGC"
+# 512 MB budget: cap the JVM heap at 70% of the container memory. JAVA_TOOL_OPTIONS
+# is read automatically by the JVM, so a plain exec-form entrypoint is enough.
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=70 -XX:+UseSerialGC"
 ENV SPRING_MAIN_LAZY_INITIALIZATION=true
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
