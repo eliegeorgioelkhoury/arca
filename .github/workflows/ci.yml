@@ -20,12 +20,12 @@ jobs:
         id: detect
         run: |
           if [ -f backend/pom.xml ]; then echo "present=true" >> "$GITHUB_OUTPUT"; else echo "present=false" >> "$GITHUB_OUTPUT"; fi
-      - name: Set up JDK 21
+      - name: Set up JDK 17
         if: steps.detect.outputs.present == 'true'
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: '17'
           cache: maven
       - name: Build, lint & test
         if: steps.detect.outputs.present == 'true'
