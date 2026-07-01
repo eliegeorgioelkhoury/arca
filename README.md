@@ -5,7 +5,7 @@
 
 > B2B expense and reimbursement built on a **real double-entry ledger**. Every approved expense posts one balanced debit/credit pair, and the trial balance always sums to zero.
 
-**Status:** 🚧 Scaffolding (GATE 1). See [STATE.md](STATE.md) · [ROADMAP.md](ROADMAP.md).
+**Status:** 🚧 Milestones 1–5 built and tested; deploy pending. See [STATE.md](STATE.md) · [ROADMAP.md](ROADMAP.md).
 
 <!-- TODO: replace with a looping capture of submit → approve → ledger balancing; drop the file at docs/demo.gif -->
 ![ARCA demo — coming soon](https://placehold.co/1200x600/0f766e/f8fafc?text=ARCA+demo+GIF+coming+soon)
@@ -42,20 +42,25 @@ Angular (Vercel) ──HTTPS──▶ Spring Boot API (Render · Docker) ──�
 - Milestone-by-milestone breakdown in [ROADMAP.md](ROADMAP.md).
 
 ## Run locally
-> Not scaffolded yet — GATE 1 is repo hygiene + CI. These are the intended steps; they firm up in milestones 2 and 4.
+**No Docker required** — in dev the backend runs against an embedded Postgres and seeds demo data on boot.
 
 ```bash
-# 1. Clone
 git clone git@github.com:eliegeorgioelkhoury/arca.git && cd arca
 
-# 2. Configure environment
-cp .env.example .env        # fill in local values
+# 1. Backend — http://localhost:8080 (embedded Postgres + seed). Swagger at /swagger-ui.
+cd backend && ./mvnw spring-boot:test-run
 
-# 3. Backend (Spring Boot) — http://localhost:8080, Swagger at /swagger-ui
-cd backend && ./mvnw spring-boot:run
-
-# 4. Frontend (Angular) — http://localhost:4200
+# 2. Frontend — http://localhost:4200
 cd ../frontend && npm ci && npm start
+```
+
+Then open http://localhost:4200 and **Sign in as demo** (Employee / Manager / Admin; password `demo1234`).
+
+### Tests
+```bash
+cd backend  && ./mvnw verify          # real-Postgres sum-to-zero + API tests (no Docker)
+cd frontend && npm run lint && npm run build
+cd frontend && npm run e2e            # Playwright happy path (boots the full stack)
 ```
 
 ## Project layout
