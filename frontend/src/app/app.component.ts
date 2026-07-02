@@ -22,9 +22,9 @@ import { AuthService } from './core/auth.service';
             }
           </nav>
           <div class="user">
-            <span class="chip credit" data-testid="role-chip">{{ auth.user()!.role }}</span>
-            <span class="muted small">{{ auth.user()!.fullName }}</span>
-            <button class="btn secondary" (click)="auth.logout()" data-testid="logout">Sign out</button>
+            <span class="role-chip" data-testid="role-chip">{{ auth.user()!.role }}</span>
+            <span class="who">{{ auth.user()!.fullName }}</span>
+            <button class="btn signout" (click)="auth.logout()" data-testid="logout">Sign out</button>
           </div>
         }
       </div>
@@ -34,49 +34,93 @@ import { AuthService } from './core/auth.service';
   styles: [
     `
       .nav {
-        background: #fff;
-        border-bottom: 1px solid var(--border);
+        background: var(--midnight);
         position: sticky;
         top: 0;
         z-index: 10;
+        box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
       }
       .nav-inner {
         display: flex;
         align-items: center;
-        gap: 20px;
-        padding-top: 12px;
-        padding-bottom: 12px;
+        gap: var(--space-5);
+        padding-top: var(--space-3);
+        padding-bottom: var(--space-3);
       }
       .brand {
-        font-weight: 800;
+        font-family: var(--font-display);
+        font-weight: 700;
         font-size: 18px;
-        color: var(--ink);
-        letter-spacing: 0.02em;
+        letter-spacing: 0.04em;
+        color: #fff;
+      }
+      .brand:hover {
+        color: #fff;
+        text-decoration: none;
       }
       .brand-sub {
-        color: var(--credit-teal);
-        font-weight: 700;
+        color: var(--copper-bright);
+        font-weight: 600;
       }
       .links {
         display: flex;
-        gap: 16px;
-        margin-left: 8px;
+        gap: var(--space-5);
+        margin-left: var(--space-2);
       }
       .links a {
-        color: var(--muted);
-        font-weight: 600;
-        padding: 6px 2px;
+        color: rgba(244, 241, 234, 0.68);
+        font-weight: 500;
+        font-size: 14px;
+        padding: 6px 0;
         border-bottom: 2px solid transparent;
+        transition: color 0.15s ease, border-color 0.15s ease;
+      }
+      .links a:hover {
+        color: #fff;
+        text-decoration: none;
       }
       .links a.active {
-        color: var(--ink);
-        border-bottom-color: var(--brand);
+        color: #fff;
+        border-bottom-color: var(--copper-bright);
       }
       .user {
         margin-left: auto;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: var(--space-3);
+      }
+      .role-chip {
+        font: 600 11px/1 var(--font-body);
+        letter-spacing: 0.06em;
+        color: var(--copper-bright);
+        background: rgba(200, 131, 75, 0.14);
+        border: 1px solid rgba(200, 131, 75, 0.38);
+        padding: 4px 9px;
+        border-radius: 999px;
+      }
+      .who {
+        color: rgba(244, 241, 234, 0.6);
+        font-size: 13px;
+      }
+      @media (max-width: 640px) {
+        .who {
+          display: none;
+        }
+      }
+      .btn.signout {
+        --btn-bg: transparent;
+        --btn-fg: rgba(244, 241, 234, 0.85);
+        min-height: 34px;
+        padding: 6px 12px;
+        border-color: rgba(255, 255, 255, 0.22);
+      }
+      .btn.signout:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .nav a:focus-visible,
+      .nav .btn:focus-visible {
+        outline: 2px solid var(--copper-bright);
+        outline-offset: 3px;
       }
     `,
   ],

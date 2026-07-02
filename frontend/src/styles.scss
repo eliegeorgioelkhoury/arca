@@ -1,19 +1,64 @@
+/* ============================================================================
+   ARCA design system. Brief tokens: Midnight / Surface / Paper / Copper +
+   credit-teal / debit-coral. Space Grotesk (display), Inter (text),
+   IBM Plex Mono (figures). Colors are contrast-checked for WCAG AA.
+   ========================================================================== */
 :root {
-  --credit-teal: #0e9f8e;
-  --credit-teal-strong: #0b7d70;
-  --credit-teal-soft: #d9f3ef;
-  --debit-coral: #ef5f45;
-  --debit-coral-strong: #d84a30;
-  --debit-coral-soft: #fde2dc;
-  --ink: #18272f;
-  --muted: #5f7480;
-  --bg: #f5f8f9;
-  --card: #ffffff;
-  --border: #e2e9ec;
-  --brand: #0e7490;
-  --brand-strong: #0b5b71;
-  --shadow: 0 1px 2px rgba(16, 42, 52, 0.06), 0 6px 20px rgba(16, 42, 52, 0.06);
+  /* Brief palette */
+  --midnight: #14181e;
+  --midnight-2: #222c39;
+  --surface: #ffffff;
+  --surface-2: #faf7f1; /* subtle alt surface: table hover, secondary hover */
+  --paper: #f4f1ea; /* page background */
+
+  --copper: #9c5a2a; /* primary accent — 5.3:1 with white text */
+  --copper-strong: #7f4820; /* hover + copper text/links on light */
+  --copper-bright: #c8834b; /* accents on dark (nav) */
+  --copper-soft: #f2e6d7;
+
+  /* Ledger duality */
+  --credit: #0f8f80;
+  --credit-text: #0a6b60; /* 6.2:1 on white */
+  --credit-soft: #d9efeb;
+  --debit: #d75f3f;
+  --debit-text: #b0432a; /* 5.5:1 on white */
+  --debit-soft: #fbe3da;
+
+  /* Neutrals */
+  --muted: #5b6673; /* 5.0:1 on paper */
+  --border: #e6e0d5;
+  --border-strong: #d7cfc0;
+
+  /* Semantic aliases so existing component styles keep working */
+  --ink: var(--midnight);
+  --bg: var(--paper);
+  --card: var(--surface);
+  --brand: var(--copper);
+  --brand-strong: var(--copper-strong);
+  --credit-teal: var(--credit);
+  --credit-teal-strong: var(--credit-text);
+  --credit-teal-soft: var(--credit-soft);
+  --debit-coral: var(--debit);
+  --debit-coral-strong: var(--debit-text);
+  --debit-coral-soft: var(--debit-soft);
+
+  /* Type */
+  --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
   --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgba(20, 24, 30, 0.05), 0 10px 26px rgba(20, 24, 30, 0.06);
+  --ring: 0 0 0 3px rgba(156, 90, 42, 0.28); /* copper focus ring for inputs */
 }
 
 * {
@@ -25,87 +70,134 @@ body {
   padding: 0;
 }
 body {
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
   color: var(--ink);
-  background: var(--bg);
+  background: var(--paper);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-}
-a {
-  color: var(--brand);
-  text-decoration: none;
+  text-rendering: optimizeLegibility;
 }
 
-/* Visible keyboard focus, everywhere. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--midnight);
+}
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 var(--space-1);
+}
+h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 var(--space-3);
+}
+
+a {
+  color: var(--copper-strong);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--midnight);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Visible, keyboard-only focus — consistent everywhere */
+:focus {
+  outline: none;
+}
 :focus-visible {
-  outline: 3px solid var(--brand);
+  outline: 2px solid var(--copper);
   outline-offset: 2px;
   border-radius: 6px;
 }
 
 .container {
-  max-width: 1080px;
+  max-width: 1060px;
   margin: 0 auto;
-  padding: 24px;
+  padding: var(--space-6) var(--space-5);
 }
 .card {
-  background: var(--card);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 20px;
+  padding: var(--space-5);
 }
 
+/* ---- Buttons ---- */
 .btn {
+  --btn-bg: var(--copper);
+  --btn-bg-hover: var(--copper-strong);
+  --btn-fg: #fff;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 10px 16px;
   border: 1px solid transparent;
   border-radius: 10px;
-  padding: 10px 16px;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
+  font: 600 14px/1 var(--font-body);
   cursor: pointer;
-  background: var(--brand);
-  color: #fff;
-  transition: transform 0.08s ease, background 0.15s ease, box-shadow 0.15s ease;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  transition: background 0.15s ease, transform 0.06s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 .btn:hover {
-  background: var(--brand-strong);
+  background: var(--btn-bg-hover);
 }
 .btn:active {
   transform: translateY(1px);
 }
-.btn.secondary {
-  background: #fff;
-  color: var(--ink);
-  border-color: var(--border);
-}
-.btn.secondary:hover {
-  background: #f0f4f5;
-}
-.btn.credit {
-  background: var(--credit-teal);
-}
-.btn.credit:hover {
-  background: var(--credit-teal-strong);
-}
-.btn.danger {
-  background: var(--debit-coral);
-}
-.btn.danger:hover {
-  background: var(--debit-coral-strong);
+.btn:focus-visible {
+  outline: 2px solid var(--midnight);
+  outline-offset: 2px;
 }
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
+  transform: none;
+}
+.btn:disabled:hover {
+  background: var(--btn-bg);
+}
+.btn.secondary {
+  --btn-bg: var(--surface);
+  --btn-bg-hover: var(--surface-2);
+  --btn-fg: var(--midnight);
+  border-color: var(--border-strong);
+}
+.btn.secondary:hover {
+  border-color: var(--copper);
+}
+.btn.credit {
+  --btn-bg: #0c7a6c;
+  --btn-bg-hover: #0a6b60;
+} /* 4.9:1 with white */
+.btn.danger {
+  --btn-bg: #c2492b;
+  --btn-bg-hover: #a63d22;
+} /* 4.8:1 with white */
+/* .credit/.debit style figures (mono, colored); buttons must keep body font + white text */
+.btn.credit,
+.btn.debit {
+  color: var(--btn-fg);
+  font-family: var(--font-body);
 }
 
+/* ---- Forms ---- */
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 14px;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 .field label {
   font-size: 13px;
@@ -116,72 +208,107 @@ a {
 .field select,
 .field textarea {
   padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font: inherit;
-  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font: 400 14px/1.4 var(--font-body);
+  background: var(--surface);
+  color: var(--ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: var(--copper);
+}
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: none;
+  border-color: var(--copper);
+  box-shadow: var(--ring);
 }
 
+/* ---- Tables ---- */
 table {
   width: 100%;
   border-collapse: collapse;
 }
-th,
-td {
+thead th {
   text-align: left;
-  padding: 12px 10px;
+  padding: 10px 12px;
+  font: 600 11px/1 var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+tbody td {
+  padding: 12px;
   border-bottom: 1px solid var(--border);
   font-size: 14px;
+  vertical-align: middle;
 }
-th {
-  color: var(--muted);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+tbody tr {
+  transition: background 0.12s ease;
+}
+tbody tr:hover,
+tbody tr:focus-within {
+  background: var(--surface-2);
 }
 td.num,
 th.num {
   text-align: right;
-  font-variant-numeric: tabular-nums;
 }
 
-/* Credit / debit duality — the ledger's visual signature. */
-.debit {
-  color: var(--debit-coral-strong);
+/* Figures use the mono face + tabular numerals */
+.mono,
+.num,
+.amount,
+.debit,
+.credit {
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+}
+.debit {
+  color: var(--debit-text);
 }
 .credit {
-  color: var(--credit-teal-strong);
-  font-variant-numeric: tabular-nums;
-}
-.chip {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-}
-.chip.debit {
-  background: var(--debit-coral-soft);
-  color: var(--debit-coral-strong);
-}
-.chip.credit {
-  background: var(--credit-teal-soft);
-  color: var(--credit-teal-strong);
-}
-.chip.status-SUBMITTED {
-  background: #fff3d6;
-  color: #9a6b00;
-}
-.chip.status-APPROVED {
-  background: var(--credit-teal-soft);
-  color: var(--credit-teal-strong);
-}
-.chip.status-REJECTED {
-  background: var(--debit-coral-soft);
-  color: var(--debit-coral-strong);
+  color: var(--credit-text);
 }
 
+/* ---- Chips ---- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font: 600 12px/1.4 var(--font-body);
+  letter-spacing: 0.02em;
+}
+.chip.debit {
+  background: var(--debit-soft);
+  color: var(--debit-text);
+  font-family: var(--font-body);
+}
+.chip.credit {
+  background: var(--credit-soft);
+  color: var(--credit-text);
+  font-family: var(--font-body);
+}
+.chip.status-SUBMITTED {
+  background: #fdeecb;
+  color: #855400;
+}
+.chip.status-APPROVED {
+  background: var(--credit-soft);
+  color: var(--credit-text);
+}
+.chip.status-REJECTED {
+  background: var(--debit-soft);
+  color: var(--debit-text);
+}
+
+/* ---- Utilities ---- */
 .muted {
   color: var(--muted);
 }
@@ -190,37 +317,29 @@ th.num {
 }
 .row {
   display: flex;
-  gap: 12px;
+  gap: var(--space-3);
   align-items: center;
 }
 .spread {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-4);
 }
 .grid {
   display: grid;
-  gap: 16px;
-}
-h1 {
-  font-size: 22px;
-  margin: 0 0 4px;
-}
-h2 {
-  font-size: 16px;
-  margin: 0 0 12px;
+  gap: var(--space-4);
 }
 .error {
-  color: var(--debit-coral-strong);
+  color: var(--debit-text);
   font-weight: 600;
 }
 
-/* Gentle reveal on load. */
+/* ---- Motion ---- */
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -228,14 +347,54 @@ h2 {
   }
 }
 .reveal {
-  animation: rise 0.4s ease both;
+  animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes slide-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes slide-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation: none !important;
-    transition: none !important;
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
