@@ -33,6 +33,10 @@ public class SupabaseReceiptStorageService implements ReceiptStorageService {
         this.signedUrlExpirySeconds = signedUrlExpirySeconds;
         this.client = builder
                 .baseUrl(this.storageBaseUrl)
+                // New Supabase secret keys (sb_secret_...) are not JWTs and authenticate
+                // via the apikey header. Send the key there, and mirror it in Authorization
+                // (Bearer = same key) so both new secret keys and legacy service_role JWTs work.
+                .defaultHeader("apikey", serviceKey)
                 .defaultHeader("Authorization", "Bearer " + serviceKey)
                 .build();
     }
