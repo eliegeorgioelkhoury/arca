@@ -97,36 +97,39 @@ import { CountUpDirective } from '../../shared/count-up.directive';
       }
       .bar-row {
         display: grid;
-        grid-template-columns: 110px 1fr auto;
-        gap: 10px;
+        grid-template-columns: 120px 1fr auto;
+        gap: var(--space-3);
         align-items: center;
-        margin: 8px 0;
+        margin: 10px 0;
       }
       .bar {
-        background: #eef3f4;
+        background: #ece6da;
         border-radius: 999px;
-        height: 12px;
+        height: 14px;
         overflow: hidden;
       }
       .bar-fill {
         height: 100%;
-        background: var(--brand);
+        background: var(--copper);
         border-radius: 999px;
-        transition: width 0.6s ease;
+        transform-origin: left center;
+        animation: grow-x 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
       }
       .bar-fill.credit-bg {
-        background: var(--credit-teal);
+        background: var(--credit);
       }
       .bar-label {
         font-size: 13px;
         color: var(--muted);
       }
       .bar-val {
+        font-family: var(--font-mono);
         font-variant-numeric: tabular-nums;
         font-size: 13px;
+        color: var(--midnight);
       }
       .totals td {
-        border-top: 2px solid var(--border);
+        border-top: 2px solid var(--border-strong);
       }
     `,
   ],

@@ -36,6 +36,10 @@ export class CountUpDirective implements OnChanges {
   }
 
   private render(v: number): void {
-    this.el.nativeElement.textContent = this.prefix + v.toFixed(this.decimals);
+    const formatted = v.toLocaleString('en-US', {
+      minimumFractionDigits: this.decimals,
+      maximumFractionDigits: this.decimals,
+    });
+    this.el.nativeElement.textContent = this.prefix + formatted;
   }
 }
