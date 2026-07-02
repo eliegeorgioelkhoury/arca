@@ -1,0 +1,41 @@
+# Render Blueprint for the ARCA backend. Config only — apply it from the Render dashboard.
+# Docker web service built from infra/Dockerfile. No real secrets live here: every prod
+# env var is sync:false, so you enter its value in Render when you apply the blueprint.
+# (PORT is injected by Render automatically; the app binds to it — see application-prod.yml.)
+services:
+  - type: web
+    name: arca-backend
+    runtime: docker
+    plan: free
+    region: ohio # US East
+    branch: main
+    dockerfilePath: ./infra/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      # --- Required (no code default — must be set) ---
+      - key: SPRING_PROFILES_ACTIVE # set to: prod
+        sync: false
+      - key: DATABASE_URL # jdbc:postgresql://<neon-host>/<db>?sslmode=require
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS # https://<your-app>.vercel.app
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY # a Supabase secret key (sb_secret_...) or legacy service_role JWT
+        sync: false
+      # --- Optional (has a code default — set to override; do not leave blank) ---
+      - key: DB_POOL_MAX_SIZE
+        sync: false
+      - key: JWT_EXPIRATION_MS
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        sync: false
+      - key: SUPABASE_SIGNED_URL_EXPIRY
+        sync: false

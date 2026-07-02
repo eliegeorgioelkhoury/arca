@@ -1,6 +1,11 @@
 # Production profile — Neon Postgres + Supabase Storage.
 # Activate with SPRING_PROFILES_ACTIVE=prod. All values come from the environment;
 # no defaults on the datasource, so a misconfigured deploy fails fast on boot.
+
+# Bind to the port Render injects (falls back to 8080 locally) so Render can route to it.
+server:
+  port: ${PORT:8080}
+
 spring:
   datasource:
     url: ${DATABASE_URL}
